@@ -5,4 +5,6 @@ Tables/Classes - what has an id?
   genre - array of strings - (news, music, movies)
 
 Relationships:
-  1. track/collection =>
+
+MediaCompany HAS MANY PODCASTS
+POD
