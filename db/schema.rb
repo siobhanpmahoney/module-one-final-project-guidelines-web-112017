@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 20171205201239) do
     t.string "name"
   end
 
-  create_table "media_companies", force: :cascade do |t|
+  create_table "mediacompanies", force: :cascade do |t|
     t.string "name"
   end
 
@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20171205201239) do
   create_table "podcasts", force: :cascade do |t|
     t.string "name"
     t.float "rating"
-    t.integer "media_company_id"
+    t.integer "mediacompany_id"
   end
 
 end

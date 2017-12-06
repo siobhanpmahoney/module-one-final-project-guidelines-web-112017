@@ -7,7 +7,7 @@ def welcome
   puts "genre: string"
   puts "minimum_rating: integer (out of five)"
   puts "avg_episode_length: integer (minutes)"
-  puts "media_company: string"
+  puts "mediacompany: string"
   puts "keyword: string"
   puts ""
   puts "Here is an example query:"
@@ -25,20 +25,20 @@ def user_input
 end
 
 
-def query(title: nil, genre: nil, minimum_rating: nil, avg_episode_length: nil, media_company: nil, keyword: nil)
-  # parse through data for result
-  array_of_podcasts = Podcast.where(name: title, genre: )
-  array_of_episodes
-
-  puts "top 5 highest rated podcasts that match the query"
-  puts "data result"
-
-  puts "top 5 most recent podcasts that match the query"
-  puts "data result"
-
-  puts "top 5 highest rated episodes that match the query"
-  puts "data result"
-
-  puts "top 5 most recent episodes that match the query"
-  puts "data result"
-end
+# def query(title: nil, genre: nil, minimum_rating: nil, avg_episode_length: nil, mediacompany: nil, keyword: nil)
+#   # parse through data for result
+#   array_of_podcasts = Podcast.where(name: title, genre: )
+#   array_of_episodes
+#
+#   puts "top 5 highest rated podcasts that match the query"
+#   puts "data result"
+#
+#   puts "top 5 most recent podcasts that match the query"
+#   puts "data result"
+#
+#   puts "top 5 highest rated episodes that match the query"
+#   puts "data result"
+#
+#   puts "top 5 most recent episodes that match the query"
+#   puts "data result"
+# end
