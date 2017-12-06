@@ -1,3 +1,3 @@
 class Episode < ActiveRecord::Base
-  belongs_to :podcasts
+  belongs_to :podcast
 end
