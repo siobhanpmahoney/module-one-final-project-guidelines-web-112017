@@ -1,4 +1,4 @@
-class Podcast_Genre < ActiveRecord::Base
+class Podcastgenre < ActiveRecord::Base
   belongs_to :podcast
   belongs_to :genre
 end
