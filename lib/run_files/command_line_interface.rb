@@ -20,7 +20,7 @@ def user_input
   puts "What would you like to search for?"
   input = gets.chomp
   # input is a string, which needs to be converted to a hash
-  query(input)
+  # query(input)
   puts "goodbye"
 end
 
