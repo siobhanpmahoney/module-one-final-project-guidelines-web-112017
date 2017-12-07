@@ -5,8 +5,8 @@ def welcome
   puts ""
   puts "title: string"
   puts "genre: string"
-  puts "minimum_rating: integer (out of five)"
-  puts "avg_episode_length: integer (minutes)"
+  # puts "minimum_rating: integer (out of five)"
+  # puts "avg_episode_length: integer (minutes)"
   puts "media_company: string"
   puts "keyword: string"
   puts ""
@@ -16,22 +16,25 @@ def welcome
 end
 #
 
-def run_program
-  input = user_input
-  search(query_converter(input))
-end
-
-def user_input
-  puts "What would you like to search for?"
-  input = gets.chomp
-<<<<<<< HEAD
-  # input is a string, which needs to be converted to a hash
-  # query(input)
-  puts "goodbye"
-=======
-  # method gets input from user. returns string of user input
-  input
-end
+# def run_program
+#   input = user_input
+#   search(query_converter(input))
+# end
+#
+# def user_input
+#   puts "What would you like to search for?"
+#   input = gets.chomp
+#   # method gets input from user. returns string of user input
+#   input
+# end
+#
+# hash = {k: v, k: v}
+#
+# Podcast.all.select |pod|
+#   hash.all? do |attribute, value|
+#     pod[attribute]include?(value)
+#   end
+# end
 
 
 
@@ -43,7 +46,6 @@ def query_converter
   end
   hash
   # turning the string into hash from which all other methods will work from
->>>>>>> 8f07a1c3240bd08b88a99ce65046c1dce95077ae
 end
 
 # def search
