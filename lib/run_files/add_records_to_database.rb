@@ -1,8 +1,4 @@
-# require "pry"
-# require 'rest-client'
-# require 'nokogiri'
-# require 'json'
-# # require 'open-uri'
+
 
 
 def add_records_to_database
