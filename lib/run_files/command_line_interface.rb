@@ -23,14 +23,21 @@ end
 
 def user_input
   puts "What would you like to search for?"
-  gets.chomp
+  input = gets.chomp
   # method gets input from user. returns string of user input
+  input
 end
 
 
 
 def query_converter
-  user_input # turning the string into hash from which all other methods will work from
+  # string = user_input
+  hash = {}
+  user_input.split(", ").each do |element|
+    hash[element.split(": ")[0].to_sym] = element.split(": ")[1]
+  end
+  hash
+  # turning the string into hash from which all other methods will work from
 end
 
 # def search
@@ -38,12 +45,19 @@ end
 #   #take hash of search, puts out in a readable format the podcasts and episodes related to search
 #   # parse through data for result
 #   get_array_of_podcasts(query_converter)
-  # array_of_episodes = get_array_of_episodes(hash)
-  # "SELECT name FROM podcasts WHERE rating > 4 #{minimum_rating} AND avg_episode_length == "
+#   array_of_episodes = get_array_of_episodes(hash)
+#   "SELECT name FROM podcasts WHERE rating > 4 #{minimum_rating} AND avg_episode_length == "
 
 def pod_filter
-   #aware of a  search has, returns array of applicable pods
+  hash = query_converter
+  Podcast.all.select do |pod_obj|
+    hash.each do |key, value|
+      pod_obj[key] == value
+    end
+  end
 end
+
+
 
 def episode_filter
   #takes in search has, returns array of applicable episodes
@@ -71,7 +85,7 @@ end
 def ep_filter_for_user_to_review #takes ep_filter instance array and converts into readable string for user
 end
 
-  #
+
   # puts "top 5 highest rated podcasts that match the query"
   # puts "data result"
   #
