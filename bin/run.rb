@@ -2,4 +2,4 @@ require_relative '../config/environment'
 
 welcome
 # puts query_converter
-pod_filter
+puts query_converter
