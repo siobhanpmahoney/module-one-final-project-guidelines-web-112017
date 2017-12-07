@@ -1,8 +1,4 @@
-# require "pry"
-# require 'rest-client'
-# require 'nokogiri'
-# require 'json'
-# # require 'open-uri'
+
 
 
 def add_records_to_database
@@ -14,13 +10,13 @@ def add_records_to_database
     add_podcast_episodes(podcast_hash["collectionViewUrl"], podcast_hash["collectionId"])
     create_genre_with_hash(podcast_hash)
     create_podcastgenre_with_hash(podcast_hash)
-    create_media_company_with_hash(podcast_hash)
+    create_mediacompany_with_hash(podcast_hash)
   end
 
 end
 
 def create_podcast_with_hash(podcast_hash)
-  Podcast.find_or_create_by(name: podcast_hash["collectionName"], id: podcast_hash["collectionId"], media_company_id: podcast_hash["artistId"], rating: get_podcast_rating(podcast_hash["collectionViewUrl"]))
+  Podcast.find_or_create_by(name: podcast_hash["collectionName"], id: podcast_hash["collectionId"], mediacompany_id: podcast_hash["artistId"], rating: get_podcast_rating(podcast_hash["collectionViewUrl"]))
 end
 
 def create_genre_with_hash(podcast_hash)
@@ -39,9 +35,9 @@ def create_podcastgenre_with_hash(podcast_hash)
   end
 end
 
-def create_media_company_with_hash(podcast_hash)
-  if !Media_Company.all.any? {|inst| inst.id == podcast_hash["artistId"]}
-    Media_Company.create(name: podcast_hash["artistName"], id: podcast_hash["artistId"])
+def create_mediacompany_with_hash(podcast_hash)
+  if !Mediacompany.all.any? {|inst| inst.id == podcast_hash["artistId"]}
+    Mediacompany.create(name: podcast_hash["artistName"], id: podcast_hash["artistId"])
   end
 end
 

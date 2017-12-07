@@ -30,7 +30,7 @@ def query(title: nil, genre: nil, minimum_rating: nil, avg_episode_length: nil, 
   # parse through data for result
   # array_of_podcasts = Podcast.where(name: title, genre: )
   # array_of_episodes
-  "SELECT #{name} FROM podcasts WHERE rating > #{minimum_rating} AND avg_episode_length == "
+  "SELECT name FROM podcasts WHERE rating > 4 #{minimum_rating} AND avg_episode_length == "
 
   puts "top 5 highest rated podcasts that match the query"
   puts "data result"
