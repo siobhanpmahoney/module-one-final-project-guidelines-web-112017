@@ -1,3 +1,6 @@
+def get_array_of_podcasts
+  query.
+
 def get_array_of_podcasts(hash)
   query = {}
   if hash.keys.include?(:title)
