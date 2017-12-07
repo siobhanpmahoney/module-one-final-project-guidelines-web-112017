@@ -17,18 +17,20 @@ end
 #
 
 def user_input
-  puts "What would you like to search for?"
-  input = gets.chomp
-  # input is a string, which needs to be converted to a hash
-  query(input)
-  puts "goodbye"
+  # puts "What would you like to search for?"
+  # input = gets.chomp
+  # # input is a string, which needs to be converted to a hash
+  # query(input)
+  # puts "goodbye"
 end
 
+user_input
 
 def query(title: nil, genre: nil, minimum_rating: nil, avg_episode_length: nil, media_company: nil, keyword: nil)
   # parse through data for result
-  array_of_podcasts = Podcast.where(name: title, genre: )
-  array_of_episodes
+  # array_of_podcasts = Podcast.where(name: title, genre: )
+  # array_of_episodes
+  "SELECT #{name} FROM podcasts WHERE rating > #{minimum_rating} AND avg_episode_length == "
 
   puts "top 5 highest rated podcasts that match the query"
   puts "data result"
