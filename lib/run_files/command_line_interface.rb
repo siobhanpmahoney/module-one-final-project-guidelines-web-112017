@@ -5,12 +5,14 @@ def cli_interface
   while input != "exit"
     input = start_flow
     if input == "search"
+      puts "-----------------------------------------------------------------------------"
       # user_input # method gets input from user. returns string of user input
       search = query_converter   # turning the string into hash from which all other methods will work from
       query_return_option(search)
     elsif input == "help"
+      puts "-----------------------------------------------------------------------------"
       puts ""
-      puts "Queries to this database can take multiple optional parameters in the form \"attribute: query_word\"."
+      puts "Queries to this database can take multiple optional parameters in the form \"attribute: query word or phrase\"."
       puts "These are the parameters:"
       puts ""
       puts "title: string"
@@ -31,6 +33,7 @@ def cli_interface
 end
 
 def start_flow
+  puts "-----------------------------------------------------------------------------"
   puts "here are your options:"
   puts "search - searches for podcasts and episodes"
   puts "help - shows search options"
@@ -41,7 +44,7 @@ end
 def welcome
   puts "Welcome to the iTunes Podcast Database!"
   puts "This database contains information on podcasts published to iTunes."
-  puts "Queries to this database can take multiple optional parameters in the form \"attribute: query_word\"."
+  puts "Queries to this database can take multiple optional parameters in the form \"attribute: query word or phrase\"."
   puts "These are the parameters:"
   puts ""
   puts "title: string"
@@ -108,15 +111,17 @@ def query_return_option(search)
       episodes = get_array_of_episodes(search)
       rated = sort_eps_by_rating(episodes)[0..4]
       dated = sort_eps_by_date(episodes)[0..4]
+      puts "-----------------------------------------------------------------------------"
       puts ""
       puts "top #{rated.length} rated episodes that match the query"
       display_multiple_episodes(rated)
       puts ""
-      puts "#{dated.length} most recent episodes that match the query"
+      puts "top #{dated.length} most recent episodes that match the query"
       display_multiple_episodes(dated)
       puts "To see full list, enter 'list'. To make another query or exit this program, enter 'exit'."
       input = gets.chomp
       if input == "list"
+        puts "-----------------------------------------------------------------------------"
         puts "top #{episodes.length} rated episodes that match the query"
         display_multiple_episodes(sort_eps_by_rating(episodes))
         puts ""
@@ -126,13 +131,15 @@ def query_return_option(search)
   elsif input.include?("podcast")
     podcasts = get_array_of_podcasts(search)
     rated = sort_pods_by_rating(podcasts)[0..4]
+    puts "-----------------------------------------------------------------------------"
     puts ""
-    puts "top #{rated.length} rated episodes that match the query"
+    puts "top #{rated.length} rated podcasts that match the query"
     display_multiple_podcasts(rated)
     puts ""
     puts "To see the full list, type 'list'. Otherwise, type 'exit' to make another query."
     input = gets.chomp
     if input == "list"
+      puts "-----------------------------------------------------------------------------"
       puts "top #{podcasts.length} rated episodes that match the query"
       display_multiple_podcasts(sort_pods_by_rating(podcasts))
     end
