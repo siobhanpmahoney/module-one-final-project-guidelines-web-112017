@@ -2,7 +2,7 @@
 
 
 def add_records_to_database
-  results = JSON.parse(RestClient.get("https://itunes.apple.com/search?term=podcast&media=podcast&limit=50"))["results"]
+  results = JSON.parse(RestClient.get("https://itunes.apple.com/search?term=podcast&media=podcast&limit=100"))["results"]
 
   #iterate through results to create records
   results.each do |podcast_hash|
@@ -57,7 +57,8 @@ def add_podcast_episodes(url, podcast_id)
     length = episode.attributes["preview-duration"]
     length ? length = length.value : length
     episode_hash[:length] = length
-    Episode.find_or_create_by(episode_hash)
+    ep = Episode.find_or_create_by(episode_hash)
+    reformat_date(ep)
   end
 end
 
@@ -76,6 +77,15 @@ end
 def reformat_date(episode)
   current = episode.release_date
   current = current.split("/")
+  if current[0].to_i < 10
+    current[0] = "0" + "#{current[0].to_i}"
+  end
+  if current[1].to_i < 10
+    current[1] = "0" + "#{current[1].to_i}"
+  end
+  if current[2].to_i < 10
+    current[2] = "0" + "#{current[2].to_i}"
+  end
   current = "#{current[2]}/#{current[0]}/#{current[1]}"
   episode.update(release_date: current)
 end
