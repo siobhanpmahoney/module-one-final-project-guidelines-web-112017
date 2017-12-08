@@ -9,19 +9,22 @@ def cli_interface
       search = query_converter   # turning the string into hash from which all other methods will work from
       query_return_option(search)
     elsif input == "help"
+      puts ""
       puts "Queries to this database can take multiple optional parameters in the form \"attribute: query_word\"."
       puts "These are the parameters:"
       puts ""
       puts "title: string"
       puts "genre: string"
-      puts "minimum_rating: integer (out of five)"
+      puts "minimum_rating: float (out of five)"
       puts "avg_episode_length: integer (minutes)"
       puts "mediacompany: string"
       puts "keyword: string"
       puts ""
       puts "Here is an example query:"
-      puts "mediacompany: npr, keyword: korea, avg_episode_length: 30"
-      puts "This search would return all Podcasts and Episodes that match the keyword of korea, have an average episode length of 30 minutes, and were published by NPR."
+      puts "mediacompany: npr, keyword: supreme court, minimum_rating: 4.5"
+      puts ""
+      puts "This search would return all Podcasts or Episodes that match the keyword of supreme court, have an minimum rating of 4.5 stars, and were published by NPR."
+      puts ""
     end
   end
   puts "Goodbye"
@@ -43,14 +46,16 @@ def welcome
   puts ""
   puts "title: string"
   puts "genre: string"
-  puts "minimum_rating: integer (out of five)"
+  puts "minimum_rating: float (out of five)"
   puts "avg_episode_length: integer (minutes)"
   puts "mediacompany: string"
   puts "keyword: string"
   puts ""
   puts "Here is an example query:"
-  puts "mediacompany: npr, keyword: korea, avg_episode_length: 30"
-  puts "This search would return all Podcasts and Episodes that match the keyword of korea, have an average episode length of 30 minutes, and were published by NPR."
+  puts "mediacompany: npr, keyword: supreme court, minimum_rating: 4.5"
+  puts ""
+  puts "This search would return all Podcasts or Episodes that match the keyword of supreme court, have an minimum rating of 4.5 stars, and were published by NPR."
+  puts ""
 end
 
 
@@ -101,26 +106,26 @@ def query_return_option(search)
   input = gets.chomp
   if input.include?("episode")
       episodes = get_array_of_episodes(search)
-      rated = search_return_top_rated_eps(episodes)
-      dated = search_return_most_recent_eps(episodes)
+      rated = sort_eps_by_rating(episodes)[0..4]
+      dated = sort_eps_by_date(episodes)[0..4]
       puts ""
       puts "top #{rated.length} rated episodes that match the query"
       display_multiple_episodes(rated)
       puts ""
       puts "#{dated.length} most recent episodes that match the query"
       display_multiple_episodes(dated)
-      puts "To see full list, enter 'list'."
+      puts "To see full list, enter 'list'. To make another query or exit this program, enter 'exit'."
       input = gets.chomp
       if input == "list"
         puts "top #{episodes.length} rated episodes that match the query"
-        display_multiple_episodes(episodes)
+        display_multiple_episodes(sort_eps_by_rating(episodes))
         puts ""
         puts "#{episodes.length} most recent episodes that match the query"
-        display_multiple_episodes(episodes)
+        display_multiple_episodes(sort_eps_by_date(episodes))
       end
   elsif input.include?("podcast")
     podcasts = get_array_of_podcasts(search)
-    rated = search_return_top_rated_pods(podcasts)
+    rated = sort_pods_by_rating(podcasts)[0..4]
     puts ""
     puts "top #{rated.length} rated episodes that match the query"
     display_multiple_podcasts(rated)
@@ -129,7 +134,7 @@ def query_return_option(search)
     input = gets.chomp
     if input == "list"
       puts "top #{podcasts.length} rated episodes that match the query"
-      display_multiple_podcasts(podcasts)
+      display_multiple_podcasts(sort_pods_by_rating(podcasts))
     end
   end
 end
@@ -137,40 +142,25 @@ end
 
 # TOP RATED METHODS
 
-def search_return_top_rated_pods(pod_filter)
+def sort_pods_by_rating(pod_filter)
   pod_filter.sort_by do |pod|
 		pod.rating
-	end[0..4]
+	end.reverse
 end
 
-def search_return_top_rated_eps(pod_filter)
+def sort_eps_by_rating(pod_filter)
   pod_filter.sort_by do |ep|
 		ep.podcast.rating
-	end[0..4]
+	end.reverse
 end
 
-def search_return_most_recent_eps(episode_filter)
-	episode_filter[0..4]
-end
-
-
-# SUMMARY METHODS
-
-def format_response_ep(array)
-  array.each_with_index do |el, i|
-    puts "#{i+1}. #{el.name} - #{el.podcast.name}"
+def sort_eps_by_date(episode_filter)
+	episode_filter.sort_by do |ep|
+    ep.release_date
   end
 end
 
-def format_response_pod(array)
-  array.each_with_index do |el, i|
-    if el.mediacompany != nil
-      puts "#{i+1}. #{el.name} - #{el.mediacompany.name}"
-    else
-      puts "#{i+1}. #{el.name}"
-    end
-  end
-end
+
 
 # FULL DISPLAY METHoDS
 
@@ -185,12 +175,14 @@ def display_multiple_podcasts(podcasts)
 end
 
 def display_podcast(pod)
+  pod.mediacompany == nil ? media = "n/a" : media = pod.mediacompany.name
+
   puts "Podcast: #{pod.name}"
-  puts "Media Company: #{pod.mediacompany.name}"
+  puts "Media Company: #{media}"
   puts "Release Date of Most Recent Episode: #{pod.episodes.first.release_date}"
   puts "Average Length: #{pod.avg_episode_length} minutes"
   puts "Genres: #{pod.genres.map {|gen| gen.name}.join(", ")}"
-  puts "Rating: #{pod.rating} out of 5"
+  puts "Rating: #{pod.rating.round(1)} out of 5"
 end
 
 def display_multiple_episodes(episodes)

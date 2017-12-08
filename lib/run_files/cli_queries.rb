@@ -32,8 +32,9 @@ def get_array_of_podcasts(hash)
       (pod.name.downcase.include?(hash[:title].downcase) || hash[:title] == "") &&
         (convert_episode_length(pod.avg_episode_length) == convert_episode_length(hash[:avg_episode_length].to_i) || hash[:avg_episode_length] == "") &&
           ((hash[:mediacompany] == "" && pod.mediacompany == nil) || pod.mediacompany.name.downcase.include?(hash[:mediacompany].downcase) || hash[:mediacompany] == "" ) &&
-            (pod.genres.each { |genre| genre.name.downcase.include?(hash[:genre].downcase) || hash[:genre] == "" }) &&
-              (pod.rating >= hash[:minimum_rating].to_f || hash[:minimum_rating] == "")
+            (pod.genres.any? { |genre| genre.name.downcase.include?(hash[:genre].downcase) || hash[:genre] == "" }) &&
+              (pod.rating >= hash[:minimum_rating].to_f || hash[:minimum_rating] == "") &&
+                (pod.episodes.any? {|ep| ep.description.downcase.include?(hash[:keyword].downcase)} || hash[:keyword] == "")
       end
     end
   end
@@ -46,10 +47,10 @@ def get_array_of_episodes(hash)
     if hash[:mediacompany] != "" && ep.podcast.mediacompany == nil
       false
     else
-      (ep.name.downcase.include?(hash[:title].downcase) || hash[:title] == "") &&
+      (ep.podcast.name.downcase.include?(hash[:title].downcase) || hash[:title] == "") &&
         (convert_episode_length(ep.podcast.avg_episode_length) == convert_episode_length(hash[:avg_episode_length].to_i) || hash[:avg_episode_length] == "") &&
           ((hash[:mediacompany] == "" && ep.podcast.mediacompany == nil) || ep.podcast.mediacompany.name.downcase.include?(hash[:mediacompany].downcase) || hash[:mediacompany] == "" ) &&
-            (ep.podcast.genres.each { |genre| genre.name.downcase.include?(hash[:genre].downcase) || hash[:genre] == "" }) &&
+            (ep.podcast.genres.any? { |genre| genre.name.downcase.include?(hash[:genre].downcase) || hash[:genre] == "" }) &&
               (ep.podcast.rating >= hash[:minimum_rating].to_f || hash[:minimum_rating] == "") &&
                 (ep.description.downcase.include?(hash[:keyword].downcase) || hash[:keyword] == "")
       end

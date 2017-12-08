@@ -67,5 +67,18 @@ def get_podcast_rating(url)
   Nokogiri::HTML(RestClient.get("#{url}")).css('[itemprop=ratingValue]').inner_html
 end
 
+def update_all_episode_dates
+  Episode.all.each do |ep|
+    reformat_date(ep)
+  end
+end
+
+def reformat_date(episode)
+  current = episode.release_date
+  current = current.split("/")
+  current = "#{current[2]}/#{current[0]}/#{current[1]}"
+  episode.update(release_date: current)
+end
+
 # binding.pry
 # "word"
