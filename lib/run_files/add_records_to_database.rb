@@ -2,7 +2,7 @@
 
 
 def add_records_to_database
-  results = JSON.parse(RestClient.get("https://itunes.apple.com/search?term=podcast&media=podcast&limit=10"))["results"]
+  results = JSON.parse(RestClient.get("https://itunes.apple.com/search?term=podcast&media=podcast&limit=50"))["results"]
 
   #iterate through results to create records
   results.each do |podcast_hash|
@@ -43,6 +43,10 @@ end
 
 def add_podcast_episodes(url, podcast_id)
   result = Nokogiri::HTML(RestClient.get("#{url}")).css('div.tracklist-content-box tr.podcast-episode')
+
+  if result.length > 10
+    result = result[0...10]
+  end
   result.each do |episode|
     episode_hash = {
       name: episode.css("td.name span.text").text,

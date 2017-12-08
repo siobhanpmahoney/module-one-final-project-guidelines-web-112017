@@ -1,5 +1,5 @@
 require_relative '../config/environment'
+ActiveRecord::Base.logger = nil
 
-welcome
-# puts query_converter
-puts query_converter
+# welcome
+cli_interface

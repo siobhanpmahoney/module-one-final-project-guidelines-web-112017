@@ -6,22 +6,12 @@ class Podcast < ActiveRecord::Base
   has_many :episodes
 
   def avg_episode_length
-    answer = self.episodes.sum(:length) / self.episodes.count(:length)
-    answer = answer / 1000 / 60
-    # convert_episode_length(answer)
+    if self.episodes.count(:length) > 0
+      answer = self.episodes.sum(:length) / self.episodes.count(:length)
+      answer = answer / 1000 / 60
+    else
+      answer = 0
+    end
+    answer
   end
-
-  # def convert_episode_length(answer)
-  #   if answer > 0 && answer < 22
-  #     answer = "15"
-  #   elsif answer < 37
-  #     answer = "30"
-  #   elsif answer < 52
-  #     answer = "45"
-  #   elsif answer < 67
-  #     answer = "60"
-  #   else
-  #     answer = "60+"
-  #   end
-  # end
 end
